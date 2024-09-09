@@ -1,0 +1,21 @@
+To install packages: 
+* buildroot
+  * bzip2
+  * g++ 
+  * bison
+  * flex
+  * ncurses
+  * git
+* linuxkernel
+  * libgmp3-dev 
+  * libmpc-dev
+
+# ttyUSB0 locked?
+sudo minicom -S ttyUSB0 -o
+
+# Vorgehensweise
+
+## Nach Minicomloging auf Pi  
+
+- ifconfig eth0 192.168.42.99
+- (host) root@192.168.42.99
