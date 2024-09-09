@@ -115,7 +115,7 @@ Konfigurationen anzupassen sind.*
 Bevor das Gesamtsystem getestet wird, werden zunächst die einzelnen Komponenten größtenteils unabhängig voneinander auf Funktionalität und korrekte Konfiguration getestet.  
 Ziel ist es festzustellen, ob alle geforderten Aufgaben und die Individualisierung erfüllt wurden. 
 
-Das System ist wie in `Kapitel 4: Installationsanleitung` beschrieben aufgebaut und konfiguriert.  
+Für die folgenden Tests ist das System wie in `Kapitel 4: Installationsanleitung` beschrieben aufgebaut und konfiguriert.  
 
 ### Grundkonfiguration des Raspberry Pi 4  
 
@@ -188,7 +188,7 @@ In der Detailansicht der WLAN-Verbindung kann nun überprüft werden, ob der der
 
 ### Konfiguration des Gerätetreibers und Ansteuerung der LED
 
-In diesem Abschnitt wird die Funktionalität und Ansteuerung der LED über den Gerätetreiber `signalan`. Dies beinhaltet:  
+In diesem Abschnitt wird die Funktionalität und Ansteuerung der LED über den Gerätetreiber `signalan` getestet. Dies beinhaltet:  
   
 - Der Gerätetreiber wird während des Hochfahrens des Systems geladen
 - Die Gerätedatei wird automatisch angelegt 
@@ -240,6 +240,27 @@ $ cat /dev/led_onoff_an
 
 \pagebreak
 
+### Konfiguration Mosquitto und MQTT-App
+
+In diesem Abschnitt wird die korrekte Konfiguration von Mosquitto und der MQTT-App betrachtet. Dies schließt folgende Aspekte ein:  
+  
+- Mosquitto wird beim Hochfahren des Systems automatisch gestartet
+- Mosquitto veröffentlicht regelmäßig mehrere Topics, die verschiedene Systeminformationen beinhalten
+- Die MQTT-App ist in der Lage die Frequenz der LED über das Topic `appl/frequency_set` 
+
+---
+
+Wie bei den bereits vorangegangen Tests, kann das Starten von `mosquitto` durch einen Befehl überprüft werden. `ps | grep mos` gibt eine Liste der momentan laufenden Programme zurück, welche durch den `grep`-Befehl auf die mit `mosq` im Namen gefiltert werden.  
+<br>
+
+```bash
+$ ps | grep mosq
+  166 mosquitt /usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
+  182 root     sh /etc/init.d/mosq_pub.sh
+  185 root     mosquitto_sub -t appl/frequency_set
+  ...
+```  
+<br>  
 
 
 
@@ -252,8 +273,7 @@ $ cat /dev/led_onoff_an
 
 
 
-
-
+\pagebreak
 
 ## Test des Gesamtsystems
 
