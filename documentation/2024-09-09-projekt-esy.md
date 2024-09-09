@@ -12,7 +12,7 @@ include-before:
 
 # Unterschriebene Eigenständigkeitserklärung
 
-![Eigenständigkeitserklärung](erklaerung.png)\
+![Eigenständigkeitserklärung](images/erklaerung.png)\
 
 # Angaben
 
@@ -121,16 +121,17 @@ Für die folgenden Tests ist das System wie in `Kapitel 4: Installationsanleitun
 
 In diesem Abschnitt wird die Grundkonfiguration des Raspberry Pi 4 getestet. Diese umfasst die Korrekte Konfiguration:  
   
-- des Networkboot per TFTP
-- des Hostnames
-- der User
-- der IP-Konfiguration des LAN-Port `eth0`
+- Des Networkboot per TFTP
+- Des Hostnames
+- Der User
+- Des LAN-Port `eth0`
+- Des SSH-Servers
 
 ---
 
 Der Pi wird durch anschließen des Stromkabels gestartet. Auf dem Hostrechner kann durch die Netzwerkauslastung am LAN-Port beobachtet werden, ob der TFTP-Server die Daten für den Raspberry Pi zur Verfügung stellt. Dafür geeignet sind Programme wie `btop`:
   
-![](btop.png)  
+![](images/btop.png){ height=330px }  
   
 Des Weiteren kann der Output des Befehls `tail -f /var/log/syslog | grep tftp` Schlüsse auf die korrekte Funktionsweise des TFTP-Servers geben. 
 
@@ -183,7 +184,7 @@ Nach öffnen der WLAN-Einstellungen des Smartphone sollte das WLAN-Netz auswähl
   
 In der Detailansicht der WLAN-Verbindung kann nun überprüft werden, ob der der AP des Pi korrekt Adressen aus dem Netz `192.168.123.0/24` verteilt.  
 <br>  
-![](WLAN_details.png){ height=500px }
+![](images/WLAN_details.png){ height=500px }
 <br>  
 
 ### Konfiguration des Gerätetreibers und Ansteuerung der LED
@@ -250,7 +251,7 @@ In diesem Abschnitt wird die korrekte Konfiguration von Mosquitto und der MQTT-A
 
 ---
 
-Wie bei den bereits vorangegangen Tests, kann das Starten von `mosquitto` durch einen Befehl überprüft werden. `ps | grep mos` gibt eine Liste der momentan laufenden Programme zurück, welche durch den `grep`-Befehl auf die mit `mosq` im Namen gefiltert werden.  
+Wie bei den bereits vorangegangen Tests kann das Starten von `mosquitto` durch einen Befehl überprüft werden. `ps | grep mos` gibt eine Liste der momentan laufenden Programme zurück, welche durch den `grep`-Befehl auf die mit `mosq` im Namen gefiltert werden.  
 <br>
 
 ```bash
@@ -262,16 +263,12 @@ $ ps | grep mosq
 ```  
 <br>  
 
+Um zu überprüfen, ob die Topics erfolgreich veröffentlicht werden, kann erneut das Smartphone verwendet werden. Dafür wird sichergestellt, dass dieses mit dem WLAN-Netzwerk des Raspberry Pi verbunden ist. Anschließend kann die MQTT-App geöffnet und die eingerichteten Topics beobachtet werden. Diese sollten sich regelmäßig aktualisieren. Des Weiteren kann hier das setzen einer neuen Blinkfrequenz über die App getestet werden. Wenn das entsprechende Topic eingerichtet ist, sollte ein Antippen genügen, um die LED steuern zu können.  
+<br>  
+![](images/mqtt-app.png){ height=450px }
+<br>  
 
-
-
-
-
-
-
-
-
-
+Hierbei gibt es eine Auffälligkeit bei dem Topic `system/date`. Das angezeigte Datum und die Uhrzeit sind nicht korrekt. Dies lässt sich allerdings einfach dadurch erklären, dass der Raspberry Pi aktuell keine Verbindung zum Internet besitzt. Die Verbindung ist Notwendig, um das korrekte Datum und die korrekte Uhrzeit setzen zu können.
 
 \pagebreak
 
@@ -296,10 +293,6 @@ Fängt diese nach dem Hochfahren an auf der niedrigsten Geschwindigkeit zu blink
 Im nächsten Schritt wird die WLAN-Verbindung mit dem Smartphone hergestellt. Dazu wird das WLAN-Menü des Smartphones geöffnet und durch Antippen des Eintrags `VimIsTheBest` eine Verbindung hergestellt. Sobald die Verbindung aufgebaut wurde, kann die MQTT-App geöffnet werden.  
   
 Auf dem Dashboard sollten nun alle Topics einsehbar sein. Im Folgenden kann nun getestet werden, ob durch versenden des Topics `appl/frequency_set` die Blinkfrequenz der LED gesteuert werden kann.
-
-\pagebreak
-
-# ...
 
 \pagebreak
 
